@@ -1,2 +1,14 @@
-# MEchcord
-MEchcord is a pretty simple library for Discord Bot API, written in Python 3.7+ based on libraries aiohttps and asyncio. It helps to make your bots faster and simpler.
+## Features
+
+- Connect to the Discord Gateway using WebSocket.
+- Handle Discord events (e.g., READY, MESSAGE_CREATE).
+- Support for registering commands using decorators.
+- Asynchronous HTTP client for Discord API requests.
+
+## Installation
+
+Install Mechcord via pip:
+
+```bash
+cd mechcord
+pip install .
