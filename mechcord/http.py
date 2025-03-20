@@ -4,9 +4,9 @@ import json
 class HTTPClient:
     BASE_URL = "https://discord.com/api/v10"
     
-    def __init__(self, token):
+    def __init__(self, token, session=None):
         self.token = token
-        self.session = aiohttp.ClientSession(headers={
+        self.session = session if session else aiohttp.ClientSession(headers={
             "Authorization": f"Bot {self.token}",
             "Content-Type": "application/json"
         })
