@@ -1,15 +1,17 @@
 import asyncio
 import aiohttp
 from .websocket import DiscordWebSocket
+from .http import HTTPClient
 
 class Client:
     def __init__(self, token, intents=513):
         self.token = token
         self.intents = intents
-        self.session = aiohttp.ClientSession()
+        self.session = aiohttp.ClientSession() 
         self.ws = None
         self.commands = {}
         self.event_handlers = {}
+        self.http = HTTPClient(token, session=self.session)
 
     async def on_event(self, event_name, data):
         handler = self.event_handlers.get(event_name)
@@ -26,6 +28,11 @@ class Client:
             self.commands[cmd_name] = func
             return func
         return decorator
+
+    async def send_message(self, channel_id, message):
+        endpoint = f"/channels/{channel_id}/messages"
+        payload = {"content": message}
+        return await self.http.request("POST", endpoint, json=payload)
 
     async def start(self):
         self.ws = DiscordWebSocket(self.token, self.intents, self.session, client=self)
